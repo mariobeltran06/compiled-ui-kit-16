@@ -1,7 +1,8 @@
 import * as i0 from '@angular/core';
-import { EventEmitter, Component, ViewEncapsulation, Input, Output, NgModule } from '@angular/core';
+import { EventEmitter, Component, ViewEncapsulation, Input, Output, NgModule, InjectionToken, Injectable, Optional, Inject } from '@angular/core';
 import * as i1 from '@angular/common';
 import { CommonModule } from '@angular/common';
+import * as i1$1 from '@angular/common/http';
 
 class ButtonComponent {
     constructor() {
@@ -42,7 +43,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.12", ngImpo
                 }]
         }] });
 
+const UI_KIT_CONFIG = new InjectionToken('UI_CONFIG');
+
 class UiKitModule {
+    static forRoot(config) {
+        return {
+            ngModule: UiKitModule,
+            providers: [
+                { provide: UI_KIT_CONFIG, useValue: config }
+            ]
+        };
+    }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: UiKitModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
     static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "16.2.12", ngImport: i0, type: UiKitModule, imports: [ButtonModule], exports: [ButtonModule] }); }
     static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: UiKitModule, imports: [ButtonModule, ButtonModule] }); }
@@ -55,6 +66,58 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.12", ngImpo
                 }]
         }] });
 
+class ConfigService {
+    constructor(config) {
+        this.config = config;
+    }
+    logConfig() {
+        console.log('Config de la librería:', this.config);
+    }
+    get apiUrl() {
+        return this.config?.apiUrl ?? 'https://pokeapi.co/api/v2';
+    }
+    get optionAPIGW() {
+        return this.config?.apigw ?? false;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: ConfigService, deps: [{ token: UI_KIT_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: ConfigService, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: ConfigService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root',
+                }]
+        }], ctorParameters: function () { return [{ type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: [UI_KIT_CONFIG]
+                }] }]; } });
+
+class ApiService {
+    constructor(http, configS) {
+        this.http = http;
+        this.configS = configS;
+        this.apiBase = this.configS.apiUrl;
+    }
+    getAllDataPokemon() {
+        if (this.configS.optionAPIGW) {
+            return this.http.get(`${this.apiBase}/pokemon/pikachu`);
+        }
+        else {
+            return this.http.get(`${this.apiBase}/pokemon/charmander`);
+        }
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: ApiService, deps: [{ token: i1$1.HttpClient }, { token: ConfigService }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: ApiService, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: ApiService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root',
+                }]
+        }], ctorParameters: function () { return [{ type: i1$1.HttpClient }, { type: ConfigService }]; } });
+
 /*
  * Public API Surface of ui-kit
  */
@@ -64,5 +127,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.12", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ButtonComponent, ButtonModule, UiKitModule };
+export { ApiService, ButtonComponent, ButtonModule, UiKitModule };
 //# sourceMappingURL=mariobeltran06-ui-kit-16.mjs.map
