@@ -1,0 +1,9 @@
+/*
+ * Public API Surface of ui-kit
+ */
+//MODULE UI KIT
+export * from './ui-kit.module';
+//MODULE BUTTON
+export * from './components/button/button.module';
+export * from './components/button/button.component';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Byb2plY3RzL3VpLWtpdC9zcmMvcHVibGljLWFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUVILGVBQWU7QUFDZixjQUFjLGlCQUFpQixDQUFDO0FBRWhDLGVBQWU7QUFDZixjQUFjLG1DQUFtQyxDQUFDO0FBQ2xELGNBQWMsc0NBQXNDLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIHVpLWtpdFxuICovXG5cbi8vTU9EVUxFIFVJIEtJVFxuZXhwb3J0ICogZnJvbSAnLi91aS1raXQubW9kdWxlJztcblxuLy9NT0RVTEUgQlVUVE9OXG5leHBvcnQgKiBmcm9tICcuL2NvbXBvbmVudHMvYnV0dG9uL2J1dHRvbi5tb2R1bGUnO1xuZXhwb3J0ICogZnJvbSAnLi9jb21wb25lbnRzL2J1dHRvbi9idXR0b24uY29tcG9uZW50JztcbiJdfQ==
